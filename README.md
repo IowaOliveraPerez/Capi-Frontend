@@ -1,27 +1,39 @@
-# Frontend
+# Nombre del Proyecto
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+Proyecto de backend para el ejercicio CAPI
 
-## Development server
+## Tabla de Contenidos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Créditos](#créditos)
 
-## Code scaffolding
+## Instalación
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clona el repositorio:
 
-## Build
+```bash
+git clone https://github.com/IowaOliveraPerez/Capi-Frontend.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
 
-## Running unit tests
+2. Instalar las dependencias
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+cd Capi-Frontend
+npm install
+```
 
-## Running end-to-end tests
+## Uso
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Para iniciar la aplicación, ejecuta el siguiente comando:
 
-## Further help
+```bash
+ng serve
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+El servidor se ejecutará en http://localhost:4200 y será accesible desde el navegador.
+
+## Créditos
+
+- Desarrollador: [Iowa Alejandro Olivera Pérez](https://github.com/IowaOliveraPerez)
