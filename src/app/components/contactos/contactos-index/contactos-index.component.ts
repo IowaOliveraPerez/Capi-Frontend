@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,10 +13,14 @@ import { ContactoService } from 'src/app/services/contactos.service';
 export class ContactosIndexComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  contacts: any[] = [];
+
   displayedColumns: string[] = ['nombre', 'empresa', 'fecha_cumpleanios', 'telefonos', 'emails', 'direcciones', 'actions'];
-  dataSource = new MatTableDataSource<any>([this.contacts]);
-  loading: boolean = false;
+  dataSource = new MatTableDataSource<any>();
+  loading = true;
+  totalContacts = 0;
+  pageSize = 10;
+  currentPage = 1;
+  contacts: any[] = [];
 
   constructor(
     private contactoService: ContactoService,
@@ -43,9 +47,9 @@ export class ContactosIndexComponent implements OnInit {
     this.getContacts();
   }
 
-  getContacts(): void {
+  getContacts(page: number = 1, pageSize: number = this.pageSize, filter: string = ''): void {
     this.loading = true;
-    this.contactoService.getContacts().subscribe((response) => {
+    this.contactoService.getContacts(page, pageSize, filter).subscribe((response) => {
       this.dataSource.data = response.data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -53,9 +57,15 @@ export class ContactosIndexComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
+  pageChanged(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.getContacts(this.currentPage, this.pageSize);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.getContacts(this.currentPage, this.pageSize, filterValue);
   }
 
   eliminar(contact: any) {

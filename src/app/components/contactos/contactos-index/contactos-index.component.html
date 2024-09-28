@@ -84,6 +84,8 @@
       </table>
     </div>
 
-    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="totalContacts" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 100]"
+      (page)="pageChanged($event)">
+      </mat-paginator>
   </div>
 </div>
