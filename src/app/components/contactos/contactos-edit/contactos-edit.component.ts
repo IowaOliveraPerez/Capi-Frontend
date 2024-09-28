@@ -22,8 +22,8 @@ export class ContactosEditComponent {
   ) {
     this.contactForm = this.fb.group({
       nombre: ['', Validators.required],
-      notas: ['', Validators.required],
-      pagina_web: ['', Validators.required],
+      notas: ['',],
+      pagina_web: ['',],
       empresa: [''],
       fecha_cumpleanios: [''],
       telefonos: this.fb.array([]),

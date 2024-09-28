@@ -15,7 +15,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Notas</mat-label>
-        <input matInput formControlName="notas" required>
+        <input matInput formControlName="notas">
         <mat-error *ngIf="contactForm.get('notas')?.invalid && contactForm.get('notas')?.touched">
           Las notas son obligatorias.
         </mat-error>
@@ -23,7 +23,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Página web</mat-label>
-        <input matInput formControlName="pagina_web" required>
+        <input matInput formControlName="pagina_web">
         <mat-error *ngIf="contactForm.get('pagina_web')?.invalid && contactForm.get('pagina_web')?.touched">
           La página web es obligatoria.
         </mat-error>
@@ -47,7 +47,7 @@
           <div [formGroupName]="i" style="display: flex; align-items: center;">
             <mat-form-field appearance="fill" style="flex: 1;">
               <mat-label>Número</mat-label>
-              <input matInput formControlName="numero" required>
+              <input matInput formControlName="numero">
               <mat-error *ngIf="telefono.get('numero')?.invalid && telefono.get('numero')?.touched">
                 El número es obligatorio.
               </mat-error>
@@ -66,7 +66,7 @@
           <div [formGroupName]="i" style="display: flex; align-items: center;">
             <mat-form-field appearance="fill" style="flex: 1;">
               <mat-label>Email</mat-label>
-              <input matInput formControlName="email" required>
+              <input matInput formControlName="email">
               <mat-error *ngIf="email.get('email')?.invalid && email.get('email')?.touched">
                 El email es obligatorio y debe ser válido.
               </mat-error>
@@ -85,7 +85,7 @@
           <div [formGroupName]="i" style="display: flex; align-items: center;">
             <mat-form-field appearance="fill" style="flex: 1;">
               <mat-label>Dirección</mat-label>
-              <input matInput formControlName="direccion" required>
+              <input matInput formControlName="direccion">
               <mat-error *ngIf="direccion.get('direccion')?.invalid && direccion.get('direccion')?.touched">
                 La dirección es obligatoria.
               </mat-error>
@@ -101,7 +101,7 @@
       <div class="button-container" style="display: flex; justify-content: space-between; margin-top: 20px;">
         <button mat-raised-button color="warn" type="button" class="half-width"
           routerLink="/contactos">Regresar</button>
-          <button mat-raised-button color="primary" type="submit" class="half-width">Guardar Contacto</button>
+        <button mat-raised-button color="primary" type="submit" class="half-width">Guardar Contacto</button>
       </div>
 
     </form>
