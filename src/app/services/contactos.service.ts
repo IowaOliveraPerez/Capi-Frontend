@@ -26,4 +26,8 @@ export class ContactoService {
   updateContact(id: any, contact: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, contact);
   }
+
+  deleteContact(id: any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

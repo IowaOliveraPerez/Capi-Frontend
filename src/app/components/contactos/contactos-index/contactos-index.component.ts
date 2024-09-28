@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ContactoService } from 'src/app/services/contactos.service';
@@ -17,7 +18,10 @@ export class ContactosIndexComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([this.contacts]);
   loading: boolean = false;
 
-  constructor(private contactoService: ContactoService) { }
+  constructor(
+    private contactoService: ContactoService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -42,7 +46,6 @@ export class ContactosIndexComponent implements OnInit {
   getContacts(): void {
     this.loading = true;
     this.contactoService.getContacts().subscribe((response) => {
-      console.log(response);
       this.dataSource.data = response.data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -53,5 +56,28 @@ export class ContactosIndexComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  eliminar(contact: any) {
+    this.loading = true;
+    this.contactoService.deleteContact(contact.id).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.dataSource.data = this.dataSource.data.filter(c => c.id !== contact.id);
+        this.snackBar.open('Contacto eliminado exitosamente', 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'left',
+          verticalPosition: 'bottom',
+        });
+      },
+      error: (error) => {
+        this.loading = false;
+        this.snackBar.open('Error al eliminar contacto', 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'left',
+          verticalPosition: 'bottom',
+        });
+      }
+    });
   }
 }
