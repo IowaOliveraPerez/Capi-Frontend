@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ContactoService } from 'src/app/services/contactos.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-contactos-index',
@@ -20,6 +21,9 @@ export class ContactosIndexComponent implements OnInit {
   totalContacts = 0;
   pageSize = 10;
   currentPage = 1;
+  filter = '';
+  sortColumn: string = 'nombre';
+  sortDirection: string = 'asc';
   contacts: any[] = [];
 
   constructor(
@@ -47,12 +51,15 @@ export class ContactosIndexComponent implements OnInit {
     this.getContacts();
   }
 
-  getContacts(page: number = 1, pageSize: number = this.pageSize, filter: string = ''): void {
+  getContacts(page: number = 1, pageSize: number = this.pageSize): void {
     this.loading = true;
-    this.contactoService.getContacts(page, pageSize, filter).subscribe((response) => {
+    this.contactoService.getContacts(page, pageSize, this.filter, this.sortColumn, this.sortDirection).subscribe((response) => {
       this.dataSource.data = response.data;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.totalContacts = response.total;
+      this.pageSize = response.per_page;
+      this.loading = false;
+    }, (error) => {
+      console.error('Error al obtener contactos:', error);
       this.loading = false;
     });
   }
@@ -63,9 +70,16 @@ export class ContactosIndexComponent implements OnInit {
     this.getContacts(this.currentPage, this.pageSize);
   }
 
+  sortChanged(event: Sort): void {
+    this.sortColumn = event.active;
+    this.sortDirection = this.sortDirection == 'desc' ? 'asc' : 'desc';
+    this.getContacts(this.currentPage, this.pageSize);
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.getContacts(this.currentPage, this.pageSize, filterValue);
+    this.filter = filterValue;
+    this.getContacts(this.currentPage, this.pageSize);
   }
 
   eliminar(contact: any) {

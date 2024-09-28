@@ -11,10 +11,12 @@ export class ContactoService {
 
   constructor(private http: HttpClient) { }
 
-  getContacts(page: number, pageSize: number, filter: string): Observable<any> {
+  getContacts(page: number, pageSize: number, filter: string, sortColumn:string, sortDirection:string): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('page_size', pageSize.toString())
+      .set('sortColumn', sortColumn)
+      .set('sortDirection', sortDirection)
       .set('filter', filter);
     return this.http.get<any>(this.apiUrl, { params });
   }
