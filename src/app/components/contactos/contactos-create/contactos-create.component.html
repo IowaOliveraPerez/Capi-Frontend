@@ -1,0 +1,108 @@
+<div class="form-container"
+  style="padding: 20px; border-radius: 8px; background-color: #f9f9f9; border: 2px solid black; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);">
+  <h2 style="text-align: center; margin-bottom: 20px;">Agregar Contacto</h2>
+
+  <div style="margin: 0 20%;">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 20px;">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required>
+        <mat-error *ngIf="contactForm.get('nombre')?.invalid && contactForm.get('nombre')?.touched">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Notas</mat-label>
+        <input matInput formControlName="notas" required>
+        <mat-error *ngIf="contactForm.get('notas')?.invalid && contactForm.get('notas')?.touched">
+          Las notas son obligatorias.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Página web</mat-label>
+        <input matInput formControlName="pagina_web" required>
+        <mat-error *ngIf="contactForm.get('pagina_web')?.invalid && contactForm.get('pagina_web')?.touched">
+          La página web es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Empresa</mat-label>
+        <input matInput formControlName="empresa">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Cumpleaños</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha_cumpleanios">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <h3 style="margin-top: 30px;">Teléfonos</h3>
+      <div formArrayName="telefonos">
+        <div *ngFor="let telefono of getFormArray(contactForm.get('telefonos')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Número</mat-label>
+              <input matInput formControlName="numero" required>
+              <mat-error *ngIf="telefono.get('numero')?.invalid && telefono.get('numero')?.touched">
+                El número es obligatorio.
+              </mat-error>
+            </mat-form-field>
+            <button mat-icon-button color="warn" type="button" (click)="removeTelefono(i)" style="margin-left: 10px;">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button mat-button type="button" (click)="addTelefono()" color="accent">Agregar Teléfono</button>
+
+      <h3 style="margin-top: 30px;">Emails</h3>
+      <div formArrayName="emails">
+        <div *ngFor="let email of getFormArray(contactForm.get('emails')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" required>
+              <mat-error *ngIf="email.get('email')?.invalid && email.get('email')?.touched">
+                El email es obligatorio y debe ser válido.
+              </mat-error>
+            </mat-form-field>
+            <button mat-icon-button color="warn" type="button" (click)="removeEmail(i)" style="margin-left: 10px;">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button mat-button type="button" (click)="addEmail()" color="accent">Agregar Email</button>
+
+      <h3 style="margin-top: 30px;">Direcciones</h3>
+      <div formArrayName="direcciones">
+        <div *ngFor="let direccion of getFormArray(contactForm.get('direcciones')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Dirección</mat-label>
+              <input matInput formControlName="direccion" required>
+              <mat-error *ngIf="direccion.get('direccion')?.invalid && direccion.get('direccion')?.touched">
+                La dirección es obligatoria.
+              </mat-error>
+            </mat-form-field>
+            <button mat-icon-button color="warn" type="button" (click)="removeDireccion(i)" style="margin-left: 10px;">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <button mat-button type="button" (click)="addDireccion()" color="accent">Agregar Dirección</button>
+
+      <div class="button-container" style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button mat-raised-button color="warn" type="button" class="half-width"
+          routerLink="/contactos">Regresar</button>
+        <button mat-raised-button color="primary" type="submit" class="half-width">Guardar Contacto</button>
+      </div>
+    </form>
+  </div>
+</div>

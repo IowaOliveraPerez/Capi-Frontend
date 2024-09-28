@@ -1,0 +1,75 @@
+<div class="form-container"
+  style="padding: 20px; border-radius: 8px; background-color: #f9f9f9; border: 2px solid black; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);">
+  <h2 style="text-align: center; margin-bottom: 20px;">Ver Contacto</h2>
+
+  <div style="margin: 0 20%;">
+    <form [formGroup]="contactForm" style="display: flex; flex-direction: column; gap: 20px;" novalidate>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Notas</mat-label>
+        <input matInput formControlName="notas" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Página web</mat-label>
+        <input matInput formControlName="pagina_web" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Empresa</mat-label>
+        <input matInput formControlName="empresa" readonly>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Cumpleaños</mat-label>
+        <input matInput formControlName="fecha_cumpleanios" readonly>
+      </mat-form-field>
+
+      <h3 style="margin-top: 30px;">Teléfonos</h3>
+      <div formArrayName="telefonos">
+        <div *ngFor="let telefono of getFormArray(contactForm.get('telefonos')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Número</mat-label>
+              <input matInput formControlName="numero" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 30px;">Emails</h3>
+      <div formArrayName="emails">
+        <div *ngFor="let email of getFormArray(contactForm.get('emails')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 30px;">Direcciones</h3>
+      <div formArrayName="direcciones">
+        <div *ngFor="let direccion of getFormArray(contactForm.get('direcciones')!).controls; let i = index">
+          <div [formGroupName]="i" style="display: flex; align-items: center;">
+            <mat-form-field appearance="fill" style="flex: 1;">
+              <mat-label>Dirección</mat-label>
+              <input matInput formControlName="direccion" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <button mat-raised-button color="warn" type="button" class="half-width" routerLink="/contactos">Regresar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
